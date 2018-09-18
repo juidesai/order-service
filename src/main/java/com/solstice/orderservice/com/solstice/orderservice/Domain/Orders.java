@@ -53,12 +53,13 @@ public class Orders {
         this.orderDate=orderDate;
     }
 
-    public Orders(long orderNumber, LocalDateTime orderDate, long address_order_id, List<OrderLineItems> orderLineItemsList, long account_order_id) {
+    public Orders(long orderNumber, LocalDateTime orderDate, long address_order_id, List<OrderLineItems> orderLineItemsList, long account_order_id, double grandTotal) {
         this.orderNumber = orderNumber;
         this.orderDate = orderDate;
         this.account_order_id=account_order_id;
         this.orderLineItemsList = orderLineItemsList;
         this.address_order_id=address_order_id;
+        this.grandTotal=grandTotal;
     }
 
     public long getOrderNumber() {
@@ -114,4 +115,17 @@ public class Orders {
     public void setOrderLineItemsList(List<OrderLineItems> orderLineItemsList) {
         this.orderLineItemsList = orderLineItemsList;
     }
+
+    @Override
+    public String toString() {
+        return "Orders{" +
+                "ordersId=" + orderNumber +
+                ", accountId=" + account_order_id +
+                ", orderDate=" + orderDate +
+                ", shippingAddressId=" + address_order_id +
+                ", total=" + grandTotal +
+                ", orderLineSet=" + orderLineItemsList +
+                '}';
+    }
+
 }

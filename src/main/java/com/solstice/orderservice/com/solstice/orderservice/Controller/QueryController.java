@@ -4,7 +4,7 @@ import com.solstice.orderservice.com.solstice.orderservice.Domain.Account;
 import com.solstice.orderservice.com.solstice.orderservice.Domain.OrderLineItems;
 import com.solstice.orderservice.com.solstice.orderservice.Domain.Orders;
 import com.solstice.orderservice.com.solstice.orderservice.Domain.SummaryData;
-import com.solstice.orderservice.com.solstice.orderservice.OrderFeignServices.AccountOrderProxy;
+import com.solstice.orderservice.com.solstice.orderservice.OrderFeignServices.AccountOrderProxyClient;
 import com.solstice.orderservice.com.solstice.orderservice.Repositories.OrderLineItemsRepository;
 import com.solstice.orderservice.com.solstice.orderservice.Repositories.OrdersRepository;
 import com.solstice.orderservice.com.solstice.orderservice.Services.OrderLineItemsService;
@@ -29,9 +29,13 @@ public class QueryController {
     private OrderLineItemsService orderLineItemsService;
 
     @Autowired
-    private AccountOrderProxy accountOrderProxy;
+    private AccountOrderProxyClient accountOrderProxyClient;
 
-    @GetMapping(value = "/orders/accountId/{accountId}")
+    @PostMapping(value = "/orders")
+    public Orders addNewOrder(@RequestBody Orders orders){
+        return ordersService.addNewOrder(orders);
+    }
+    @GetMapping(value = "/orders/accounts/accountId/{accountId}")
     public List<Orders> getAllOrderByAccountId(@PathVariable(value = "accountId") long accountId)
     {
         return ordersRepository.getAllOrderByAccountId(accountId);
@@ -59,8 +63,8 @@ public class QueryController {
 
     @GetMapping(value = "/feign/{accountId}")
     public Account findById(@PathVariable(value = "accountId") long accountId){
-        Account account = accountOrderProxy.findById(accountId);
-        return accountOrderProxy.findById(accountId);
+        Account account = accountOrderProxyClient.findById(accountId);
+        return accountOrderProxyClient.findById(accountId);
     }
 
     //product
@@ -76,7 +80,7 @@ public class QueryController {
 
     @GetMapping(value = "/orders/{accountId}")
     public SummaryData findSummaryByAccountId(@PathVariable(value = "accountId") long accountId){
-        return ordersService.getSummaryDataByOrderId(accountId);
+        return ordersService.getSummaryDataByAccountId(accountId);
     }
     @GetMapping("/test/{id}")
     public long test(@PathVariable(value = "id") long id){

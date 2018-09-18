@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.List;
 
 @FeignClient(name = "account-service")
-public interface AccountOrderProxy {
+public interface AccountOrderProxyClient {
 
     @RequestMapping(value = "/accounts/{accountId}", method = RequestMethod.GET)
     Account findById(@PathVariable("accountId") long accountId);

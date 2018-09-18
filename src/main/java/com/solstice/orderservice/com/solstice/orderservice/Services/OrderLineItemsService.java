@@ -3,6 +3,8 @@ package com.solstice.orderservice.com.solstice.orderservice.Services;
 
 import com.solstice.orderservice.com.solstice.orderservice.Domain.OrderLineItems;
 import com.solstice.orderservice.com.solstice.orderservice.Domain.Orders;
+import com.solstice.orderservice.com.solstice.orderservice.Domain.Product;
+import com.solstice.orderservice.com.solstice.orderservice.OrderFeignServices.ProductOrderProxyClient;
 import com.solstice.orderservice.com.solstice.orderservice.Repositories.OrderLineItemsRepository;
 import com.solstice.orderservice.com.solstice.orderservice.Repositories.OrdersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,9 @@ public class OrderLineItemsService {
     @Autowired
     private OrdersRepository ordersRepository;
 
+    @Autowired
+    private ProductOrderProxyClient productOrderProxyClient;
+
     public OrderLineItemsService(OrderLineItemsRepository orderLineItemsRepository) { this.orderLineItemsRepository = orderLineItemsRepository;
     }
 
@@ -32,6 +37,8 @@ public class OrderLineItemsService {
 
     public OrderLineItems addNewOrderLineByOrderId(OrderLineItems orderLineItems,long orderId){
         Orders orders=ordersRepository.getOne(orderId);
+        long productId=orderLineItems.getProductId();
+        orderLineItems.setPrice(productOrderProxyClient.findProductPricefromProductId(productId));
         orderLineItems.setOrders(orders);
         return orderLineItemsRepository.save(orderLineItems);
     }

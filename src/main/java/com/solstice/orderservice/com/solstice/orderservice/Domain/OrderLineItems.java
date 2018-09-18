@@ -7,6 +7,8 @@ public class OrderLineItems {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long orderItemsId;
+    @Column(name = "productId")
+    private Long productId;
     @Column(name = "quantity")
     private int quantity;
     @Column(name = "price")
@@ -14,20 +16,20 @@ public class OrderLineItems {
     @Column(name = "total_price")
     private double totalPrice;
 
-    @Column(name = "productId")
-    private Long productId;
+
 
     @ManyToOne
     @JoinColumn(name = "order_line_id")
     private Orders orders;
 
     public OrderLineItems(){}
-    public OrderLineItems(long orderItemsId, int quantity, double price, double totalPrice, Long productId) {
+    public OrderLineItems(long orderItemsId, int quantity, Long productId, double price, double totalPrice ) {
         this.orderItemsId = orderItemsId;
+        this.productId=productId;
         this.quantity = quantity;
         this.price = price;
         this.totalPrice = this.getTotalPrice();
-        this.productId=productId;
+
     }
 
     public long getOrderItemsId() {

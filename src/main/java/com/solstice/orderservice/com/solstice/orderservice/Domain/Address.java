@@ -4,9 +4,6 @@ package com.solstice.orderservice.com.solstice.orderservice.Domain;
 import javax.persistence.*;
 
 public class Address {
-
-
-
     private long addressId;
     private String street;
     private String apt;

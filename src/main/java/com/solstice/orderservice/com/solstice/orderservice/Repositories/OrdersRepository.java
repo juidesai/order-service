@@ -25,6 +25,4 @@ public interface OrdersRepository extends JpaRepository<Orders,Long> {
             "where o.account_order_id = ?1 " , nativeQuery = true)
     int getOrderNumberByAccountId(@Param("account_order_id") long accountId);
 
-
-
 }

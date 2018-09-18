@@ -9,4 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public interface ProductOrderProxyClient {
     @RequestMapping(value = "/products/{productId}")
     Product findProductById(@PathVariable(value = "productId") long productId);
+
+    @RequestMapping(value = "/productPrice/{productId}")
+    double findProductPricefromProductId(@PathVariable(value = "productId") long productId);
 }
