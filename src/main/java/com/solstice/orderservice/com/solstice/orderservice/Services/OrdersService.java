@@ -38,7 +38,8 @@ public class OrdersService {
     public List<Orders> getAllOrders() {
         return ordersRepository.findAll();
     }
-
+    
+    //validates order before creating a new order by checking if account and address exists or not
     @HystrixCommand(fallbackMethod = "addNewOrderFallback")
     public Orders addNewOrder(Orders orders){
         if((accountOrderProxyClient.findById(orders.getAccount_order_id())!=null) && (accountOrderProxyClient.findAddressById(orders.getAddress_order_id())!=null)){
