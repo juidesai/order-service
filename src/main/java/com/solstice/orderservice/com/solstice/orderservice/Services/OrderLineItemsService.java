@@ -34,7 +34,8 @@ public class OrderLineItemsService {
     public void addNewOrderLineItem(OrderLineItems orderLineItems) {
         orderLineItemsRepository.save(orderLineItems);
     }
-
+    
+    //getting product price from product feign client for adding a new orderline item
     public OrderLineItems addNewOrderLineByOrderId(OrderLineItems orderLineItems,long orderId){
         Orders orders=ordersRepository.getOne(orderId);
         long productId=orderLineItems.getProductId();
